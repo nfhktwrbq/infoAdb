@@ -66,6 +66,7 @@ public class FXMLDocumentController implements Initializable {
         DeviceInfo deviceInfo = this.infotable.get(serial);
         data = FXCollections.observableArrayList(
                 new Property(resources.getString("CPU"), deviceInfo.getCpuInfo()),
+                new Property(resources.getString("MEMORY"), deviceInfo.getMemoryInfo()),
                 new Property(resources.getString("ANDROID"), deviceInfo.getAndroidInfo()),
                 new Property(resources.getString("PHONEMODEL"), deviceInfo.getPhoneModelInfo()),
                 new Property(resources.getString("OTHER"), deviceInfo.getOtherInfo())

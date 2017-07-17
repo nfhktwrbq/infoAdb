@@ -16,7 +16,9 @@ public class DeviceInfo {
     private String cpuInfo;
     private String phoneModelInfo;
     private String androidInfo;
+    private String memoryInfo;
     private String otherInfo;
+    
     
     private DeviceInfo(){
         
@@ -38,6 +40,10 @@ public class DeviceInfo {
         return this.otherInfo;
     }
     
+    public String getMemoryInfo(){
+        return this.memoryInfo;
+    }
+    
     public static Builder newBuilder(){
         return new DeviceInfo().new Builder();
     }
@@ -50,6 +56,11 @@ public class DeviceInfo {
       
         public Builder setCpuInfo(String cpuInfo){
             DeviceInfo.this.cpuInfo = cpuInfo;
+            return this;
+        }
+        
+        public Builder setMemoryInfo(String cpuInfo){
+            DeviceInfo.this.memoryInfo = cpuInfo;
             return this;
         }
         
