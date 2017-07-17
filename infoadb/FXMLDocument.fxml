@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="borderPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" fx:controller="infoadb.FXMLDocumentController">
+    
+    <top>
+        <AnchorPane>
+            <Button  AnchorPane.leftAnchor = "0.0" text="Refresh" onAction="#handleButtonAction" fx:id="button"/>
+            <ChoiceBox AnchorPane.rightAnchor = "0.0" onAction="#handleChoiceBoxAction" fx:id="choiceBox" />            
+        </AnchorPane>        
+    </top>    
+    <center>
+        <TableView  fx:id="tableView" >           
+            <!--columns>
+                <TableColumn text="Name" fx:id="propertyName">
+                </TableColumn>
+                <TableColumn text="Properties" fx:id="propertyValue">
+                </TableColumn>
+            </columns-->            
+        </TableView>
+    </center>
+        
+    
+</BorderPane>
