@@ -86,13 +86,18 @@ public class FXMLInfoAdbModel {
         this.commonInfo = getDeviceProperties(serial, ": ", "getprop", "");
         String phoneModelInfo = DataConverter.sortDataPresent(commonInfo, PropertyList.PHONEMODEL, delimeter).replaceAll("(\\[|\\])", "");
         
-        DeviceInfo deviceInfo;
-        deviceInfo =  DeviceInfo.newBuilder()
-                .setAndroidInfo(phoneModelInfo)
-                .setCpuInfo(phoneModelInfo)
+         String androidInfo = DataConverter.sortDataPresent(commonInfo, PropertyList.ANDROID, delimeter).replaceAll("(\\[|\\])", "");
+        String otherInfo = DataConverter.sortDataPresent(commonInfo, PropertyList.OTHER, delimeter).replaceAll("(\\[|\\])", "");
+        this.commonInfo = getDeviceProperties(serial, ": ", "cat proc/cpuinfo", "");
+        String cpuInfo = DataConverter.sortDataPresent(commonInfo, PropertyList.CPU, delimeter);
+        this.commonInfo = getDeviceProperties(serial, ": ", "cat proc/meminfo", "");
+        String memoryInfo = DataConverter.sortDataPresent(commonInfo, PropertyList.MEMORY, delimeter);
+        DeviceInfo deviceInfo =  DeviceInfo.newBuilder()
+                .setAndroidInfo(androidInfo)
+                .setCpuInfo(cpuInfo)
                 .setPhoneModelInfo(phoneModelInfo)
-                .setOtherInfo(phoneModelInfo)
-                .setMemoryInfo(phoneModelInfo)
+                .setOtherInfo(otherInfo)
+                .setMemoryInfo(memoryInfo)
                 .build();        
         this.infoTab.put(serial, deviceInfo);
     }

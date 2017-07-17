@@ -43,7 +43,7 @@ public class DataConverter {
         Scanner scanner = new Scanner(is);
         while (scanner.hasNext() ){
             String[] keyValue = scanner.nextLine().split(delimeterPattern);
-            retMap.put(keyValue[0],keyValue.length > 1 ? keyValue[1] : "");
+            retMap.put(keyValue[0].trim(),(keyValue.length > 1 ? keyValue[1] : "").trim());
         }
         return retMap;
     }

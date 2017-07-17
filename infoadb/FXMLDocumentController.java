@@ -43,8 +43,8 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-
+        loadAdbDevices();
+        this.tableView.getItems().clear();        
     }
 
     @FXML
@@ -56,13 +56,7 @@ public class FXMLDocumentController implements Initializable {
             this.infoAdbModel.addDataToInfoTable(serial, resources.getString("delimeter"));
         }
         TableColumn propertyNameCol = new TableColumn("Name");
-        TableColumn propertyValueCol = new TableColumn("Property");
-        /*DeviceInfo testDeviceInfo = DeviceInfo.newBuilder()
-                .setAndroidInfo("fuck1")
-                .setCpuInfo("fuck2")
-                .setOtherInfo("fuck3")
-                .setPhoneModelInfo("fuck4")
-                .build();*/
+        TableColumn propertyValueCol = new TableColumn("Property");        
         DeviceInfo deviceInfo = this.infotable.get(serial);
         data = FXCollections.observableArrayList(
                 new Property(resources.getString("CPU"), deviceInfo.getCpuInfo()),
@@ -88,16 +82,20 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        loadAdbDevices();
+        this.tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        this.choiceBox.getSelectionModel().selectFirst();
+        /*BorderPane.setAlignment(tableView, Pos.CENTER);
+        BorderPane.setAlignment(choiceBox, Pos.CENTER);*/
+    }
+    
+    public void loadAdbDevices(){
         this.infoAdbModel = new FXMLInfoAdbModel();
         if (this.infoAdbModel != null) {
             this.choiceBox.setItems(FXCollections.observableArrayList(this.infoAdbModel.getSerial()));
         } else {
             this.choiceBox.setItems(FXCollections.observableArrayList("None"));
-        }
-        this.tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        this.choiceBox.getSelectionModel().selectFirst();
-        /*BorderPane.setAlignment(tableView, Pos.CENTER);
-        BorderPane.setAlignment(choiceBox, Pos.CENTER);*/
+        }        
     }
     
     public class Property {
