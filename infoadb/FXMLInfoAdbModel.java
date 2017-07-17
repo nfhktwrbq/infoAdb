@@ -85,6 +85,7 @@ public class FXMLInfoAdbModel {
     public void addDataToInfoTable(String serial, String delimeter){        
         this.commonInfo = getDeviceProperties(serial, ": ", "getprop", "");
         String phoneModelInfo = DataConverter.sortDataPresent(commonInfo, PropertyList.PHONEMODEL, delimeter).replaceAll("(\\[|\\])", "");
+        
         DeviceInfo deviceInfo;
         deviceInfo =  DeviceInfo.newBuilder()
                 .setAndroidInfo(phoneModelInfo)
