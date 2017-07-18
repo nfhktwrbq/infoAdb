@@ -49,6 +49,7 @@ public class FXMLDocumentController implements Initializable {
         this.choiceBoxItems.clear();
         this.data.clear();
         this.tableView.getColumns().clear();
+        this.infoAdbModel = new FXMLInfoAdbModel();  
         loadAdbDevices();        
     }
 
@@ -79,13 +80,14 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public FXMLDocumentController() {        
+        this.infoAdbModel = new FXMLInfoAdbModel(); 
+        this.data = FXCollections.observableArrayList();
         this.choiceBoxItems = FXCollections.observableArrayList();
         resources = ResourceBundle.getBundle("infoadb.StringResource");
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        this.infoAdbModel = new FXMLInfoAdbModel();       
+    public void initialize(URL url, ResourceBundle rb) {             
         this.choiceBox.setItems(this.choiceBoxItems);
         this.tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         loadAdbDevices();        
