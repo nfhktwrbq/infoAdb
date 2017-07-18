@@ -47,14 +47,14 @@ public class FXMLDocumentController implements Initializable {
     private void handleButtonAction(ActionEvent event) {         
         this.choiceBox.getItems().clear();                  
         this.choiceBoxItems.clear();
-        this.data.clear();
-        this.tableView.getColumns().clear();
+        clearTable();
         this.infoAdbModel = new FXMLInfoAdbModel();  
         loadAdbDevices();        
     }
 
     @FXML
-    private void handleChoiceBoxAction(ActionEvent event) {        
+    private void handleChoiceBoxAction(ActionEvent event) {
+        clearTable();        
         String serial = String.valueOf(choiceBox.getSelectionModel().getSelectedItem());  
         if(serial.equals("null")) return;
         this.infotable = this.infoAdbModel.getInfoTable();
@@ -84,6 +84,11 @@ public class FXMLDocumentController implements Initializable {
         this.data = FXCollections.observableArrayList();
         this.choiceBoxItems = FXCollections.observableArrayList();
         resources = ResourceBundle.getBundle("infoadb.StringResource");
+    }
+    
+    public void clearTable(){
+        this.data.clear();
+        this.tableView.getColumns().clear();
     }
 
     @Override
