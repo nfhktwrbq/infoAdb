@@ -6,6 +6,7 @@
 package infoadb;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -40,17 +41,21 @@ public class FXMLDocumentController implements Initializable {
     private final ResourceBundle resources;
     private Map<String, DeviceInfo> infotable;
     private ObservableList<Property> data;
+    private ObservableList<String> choiceBoxItems;
 
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        loadAdbDevices();
-        this.tableView.getItems().clear();        
+    private void handleButtonAction(ActionEvent event) {         
+        this.choiceBox.getItems().clear();                  
+        this.choiceBoxItems.clear();
+        this.data.clear();
+        this.tableView.getColumns().clear();
+        loadAdbDevices();        
     }
 
     @FXML
-    private void handleChoiceBoxAction(ActionEvent event) {
-        
-        String serial = String.valueOf(choiceBox.getSelectionModel().getSelectedItem());
+    private void handleChoiceBoxAction(ActionEvent event) {        
+        String serial = String.valueOf(choiceBox.getSelectionModel().getSelectedItem());  
+        if(serial.equals("null")) return;
         this.infotable = this.infoAdbModel.getInfoTable();
         if (this.infotable == null || !this.infotable.containsKey(serial)) {
             this.infoAdbModel.addDataToInfoTable(serial, resources.getString("delimeter"));
@@ -70,29 +75,27 @@ public class FXMLDocumentController implements Initializable {
         propertyValueCol.setCellValueFactory(new PropertyValueFactory<Property, String>("propertyValue"));
 
         this.tableView.getColumns().addAll(propertyNameCol, propertyValueCol);
-        this.tableView.setItems(data);
-            
-        
+        this.tableView.setItems(data);        
     }
 
-    public FXMLDocumentController() {
-        infoAdbModel = new FXMLInfoAdbModel();
+    public FXMLDocumentController() {        
+        this.choiceBoxItems = FXCollections.observableArrayList();
         resources = ResourceBundle.getBundle("infoadb.StringResource");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadAdbDevices();
+        this.infoAdbModel = new FXMLInfoAdbModel();       
+        this.choiceBox.setItems(this.choiceBoxItems);
         this.tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        this.choiceBox.getSelectionModel().selectFirst();
-        /*BorderPane.setAlignment(tableView, Pos.CENTER);
-        BorderPane.setAlignment(choiceBox, Pos.CENTER);*/
+        loadAdbDevices();        
     }
     
     public void loadAdbDevices(){
-        this.infoAdbModel = new FXMLInfoAdbModel();
+        
         if (this.infoAdbModel != null) {
-            this.choiceBox.setItems(FXCollections.observableArrayList(this.infoAdbModel.getSerial()));
+            this.choiceBoxItems.addAll(this.infoAdbModel.getSerial());           
+            this.choiceBox.getSelectionModel().selectFirst();
         } else {
             this.choiceBox.setItems(FXCollections.observableArrayList("None"));
         }        
